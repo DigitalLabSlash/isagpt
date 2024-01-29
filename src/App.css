@@ -1,38 +1,127 @@
-.App {
-  text-align: center;
+/* App.css */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.input-container {
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.essay-input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.submit-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #007bff;
   color: white;
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
+}
+.evaluation-output .evaluation-item .evaluation-mark {
+  font-weight: bold;
+  color: green;
+}
+.submit-button:disabled {
+  background-color: #cccccc;
 }
 
-.App-link {
-  color: #61dafb;
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.correction-output {
+  white-space: pre-wrap;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 20px;
+  font-size: 16px;
 }
+
+.correction-output del {
+  text-decoration: line-through;
+  color: #ff0000;
+}
+
+.correction-output strong {
+  font-weight: bold;
+  color: #008000;
+}
+
+.feedback-output {
+  margin-top: 20px;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-left: 4px solid #2196F3;
+}
+
+.feedback-output h2 {
+  margin-top: 0;
+}
+.evaluation-mark {
+  font-weight: bold;
+  color: green;
+}
+/* Additional styles can be added as needed */
+/* App.css */
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* ... (Other styles remain unchanged) */
+
+.section {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.section h2 {
+  margin-top: 0;
+}
+
+.corrected-text-output del {
+  text-decoration: line-through;
+  color: #ff0000;
+}
+
+.corrected-text-output strong {
+  font-weight: bold;
+  color: #008000;
+}
+
+.evaluation-output {
+  background-color: #e7f4e4;
+}
+
+.evaluation-item {
+  margin-bottom: 5px;
+}
+
+.feedback-output {
+  background-color: #f0f0f0;
+  border-left: 4px solid #2196F3;
+}
+
+/* Additional styles can be added as needed */
