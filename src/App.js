@@ -13,7 +13,7 @@ const EssayCorrectionApp = () => {
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post('https://isagpt.pythonanywhere.com:5000/correct', {
+      const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
         text: essayText,
       });
       const data = response.data;
