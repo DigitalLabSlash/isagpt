@@ -24,7 +24,6 @@ Before sending your result, re-read your corrected text and improve further.`); 
     'gpt-3.5-turbo-1106',
     'claude' // Representing Anthropic's Claude
   ];
-
   const handleSubmit = async () => {
     setLoading(true);
     setError('');
@@ -36,14 +35,15 @@ Before sending your result, re-read your corrected text and improve further.`); 
       });
       const data = response.data;
       
+      // Check if 'data.text' is an object and stringify it if necessary
+      const correctedText = typeof data.text === 'object' ? JSON.stringify(data.text) : data.text;
+
       setCorrections({
-        text: data.text || '',
-        feedback: data.feedback || '',
-        evaluation: data.evaluation || {}
+        text: correctedText || '',
       });
       setLoading(false);
     } catch (err) {
-      setError('Error submitting essay for correction: ' + err.message);
+      setError(`Error submitting essay for correction: ${err.message}`);
       setLoading(false);
     }
   };
