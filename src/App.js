@@ -35,8 +35,11 @@ Before sending your result, re-read your corrected text and improve further.`); 
         customPrompt: customPrompt // Sending custom prompt to backend
       });
       const data = response.data;
+      // Check if data.text is an object and handle it appropriately
+      // If it's an object, it might have the actual text under a different property
+      const correctedText = typeof data.text === 'object' ? data.text.corrected : data.text;
       setCorrections({
-        text: data.text || '',
+        text: correctedText || '',
         feedback: data.feedback || '',
         evaluation: data.evaluation || {}
       });
@@ -46,6 +49,7 @@ Before sending your result, re-read your corrected text and improve further.`); 
       setLoading(false);
     }
   };
+
 
   return (
     <div className="container">
