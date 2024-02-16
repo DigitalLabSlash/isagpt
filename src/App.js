@@ -41,8 +41,6 @@ Before sending your result, re-read your corrected text and improve further.`); 
 
       setCorrections({
         text: correctedText || '',
-        feedback: data.feedback || '',
-        evaluation: data.evaluation || {}
       });
       setLoading(false);
     } catch (err) {
