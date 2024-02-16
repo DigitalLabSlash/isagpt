@@ -24,23 +24,17 @@ Before sending your result, re-read your corrected text and improve further.`); 
     'gpt-3.5-turbo-1106',
     'claude' // Representing Anthropic's Claude
   ];
-  const handleSubmit = async () => {
+ const handleSubmit = async () => {
     setLoading(true);
     setError('');
     try {
       const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
         text: essayText,
         model: selectedModel,
-        customPrompt: customPrompt // Sending custom prompt to backend
+        customPrompt: customPrompt
       });
       const data = response.data;
-      
-      // Check if 'data.text' is an object and stringify it if necessary
-      const correctedText = typeof data.text === 'object' ? JSON.stringify(data.text) : data.text;
-
-      setCorrections({
-        text: correctedText || '',
-      });
+      setCorrectedText(data.text || ''); // Update only the corrected text
       setLoading(false);
     } catch (err) {
       setError(`Error submitting essay for correction: ${err.message}`);
