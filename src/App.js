@@ -29,7 +29,7 @@ Before sending your result, re-read your corrected text and improve further.`); 
     setLoading(true);
     setError('');
     try {
-      const response = await axios.post('http://localhost:5000/correct', {
+      const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
         text: essayText,
         model: selectedModel,
         customPrompt: customPrompt // Sending custom prompt to backend
