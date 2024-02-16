@@ -4,7 +4,9 @@ import './App.css';
 
 const EssayCorrectionApp = () => {
   const [essayText, setEssayText] = useState('');
-  const [customPrompt, setCustomPrompt] = useState(''); // For editable GPT prompt
+  const [customPrompt, setCustomPrompt] = useState(`Eres un profesor de español muy exigente corrigiendo todos los errores de lengua, gramática y conjugación y respondes siempre con en el texto integralmente corregido (todos los errores) con las reglas siguientes:
+1. Para todos los errores lingüísticos (lengua, gramática, tiempos, conjugación, generos) marca la porción de texto incorrecta con '~~texto incorrecto~~'. Luego, escriba la o las correcciónes (para que el texto sea correcto quitandole los errores) en negrita como '**texto correcto**'. Por ejemplo, si el texto del estudiante dice 'los años recieentes', deberías corregirlo como 'los años ~~recieentes~~ **recientes**'.
+Before sending your result, re-read your corrected text and improve further.`); // Default prompt
   const [selectedModel, setSelectedModel] = useState('gpt-4-1106-preview'); // Default model
   const [corrections, setCorrections] = useState({ text: '', feedback: '', evaluation: {} });
   const [loading, setLoading] = useState(false);
@@ -40,7 +42,7 @@ const EssayCorrectionApp = () => {
       });
       setLoading(false);
     } catch (err) {
-      setError('Error submitting essay for correction: ' + err.message);
+      setError(`Error submitting essay for correction: ${err.message}`);
       setLoading(false);
     }
   };
@@ -76,7 +78,32 @@ const EssayCorrectionApp = () => {
       <button onClick={handleSubmit} disabled={loading} className="submit-button">
         {loading ? 'Correcting...' : 'Correct Essay'}
       </button>
-      // Render errors, corrections, evaluation, and feedback as before
+      {error && <div className="error-message">{error}</div>}
+      {corrections.text && (
+        <div className="section">
+          <h2>Corrected Text</h2>
+          <div
+            className="correction-output"
+            dangerouslySetInnerHTML={{ __html: corrections.text }}
+          />
+        </div>
+      )}
+      {Object.keys(corrections.evaluation).length > 0 && (
+        <div className="section">
+          <h2>Section 2: Evaluation</h2>
+          <div className="evaluation-output">
+            {/* Render evaluation */}
+          </div>
+        </div>
+      )}
+      {corrections.feedback && (
+        <div className="section">
+          <h2>Feedback</h2>
+          <div className="feedback-output">
+            {/* Render feedback */}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
