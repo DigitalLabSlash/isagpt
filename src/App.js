@@ -36,8 +36,10 @@ Before sending your result, re-read your corrected text and improve further.`); 
       });
       const data = response.data;
 
-      // Check if data.text is a string before setting it as the corrected text
-      if (typeof data.text === 'string') {
+      // Check if data.text is an object and attempt to stringify it
+      if (typeof data.text === 'object' && data.text !== null) {
+        setCorrections(JSON.stringify(data.text));
+      } else if (typeof data.text === 'string') {
         setCorrections(data.text);
       } else {
         setError('Corrected text is not a string.');
