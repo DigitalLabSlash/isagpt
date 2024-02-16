@@ -34,8 +34,11 @@ Before sending your result, re-read your corrected text and improve further.`); 
         customPrompt: customPrompt // Sending custom prompt to backend
       });
       const data = response.data;
-      // Directly set the received text (which should be a string) into the correctionText state
-      setCorrectionText(data.text || '');
+      setCorrections({
+        text: data.text || '',
+        feedback: data.feedback || '',
+        evaluation: data.evaluation || {}
+      });
       setLoading(false);
     } catch (err) {
       setError(`Error submitting essay for correction: ${err.message}`);
