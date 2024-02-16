@@ -51,13 +51,14 @@ Before sending your result, re-read your corrected text and improve further.`); 
     <div className="container">
       <h1>Essay Correction Tool</h1>
       <div className="input-container">
-        <textarea
-          className="essay-input"
-          value={essayText}
-          onChange={(e) => setEssayText(e.target.value)}
-          placeholder="Paste the student's essay here..."
-          rows={10}
-        />
+          <textarea
+            className="essay-input"
+            value={essayText}
+            onChange={(e) => setEssayText(e.target.value)}
+            placeholder="Paste the student's essay here..."
+            rows={10}
+          />
+
         <textarea
           className="custom-prompt-input"
           value={customPrompt}
