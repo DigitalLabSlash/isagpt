@@ -8,10 +8,11 @@ const EssayCorrectionApp = () => {
 1. Para todos los errores lingüísticos (lengua, gramática, tiempos, conjugación, generos) marca la porción de texto incorrecta con '~~texto incorrecto~~'. Luego, escriba la o las correcciónes (para que el texto sea correcto quitandole los errores) en negrita como '**texto correcto**'. Por ejemplo, si el texto del estudiante dice 'los años recieentes', deberías corregirlo como 'los años ~~recieentes~~ **recientes**'.
 Before sending your result, re-read your corrected text and improve further.`); // Default prompt
   const [selectedModel, setSelectedModel] = useState('gpt-4-1106-preview'); // Default model
-  const [correctionText, setCorrectionText] = useState(''); // Just the text of corrections
+  const [corrections, setCorrections] = useState({ text: '', feedback: '', evaluation: {} });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // List of models including OpenAI and Anthropic's Claude
   const models = [
     'gpt-4-0125-preview',
     'gpt-4-turbo-preview',
@@ -21,7 +22,7 @@ Before sending your result, re-read your corrected text and improve further.`); 
     'gpt-3.5-turbo-0125',
     'gpt-3.5-turbo',
     'gpt-3.5-turbo-1106',
-    'claude'
+    'claude' // Representing Anthropic's Claude
   ];
 
   const handleSubmit = async () => {
@@ -34,8 +35,12 @@ Before sending your result, re-read your corrected text and improve further.`); 
         customPrompt: customPrompt // Sending custom prompt to backend
       });
       const data = response.data;
+      
+      // Check if 'data.text' is an object and stringify it if necessary
+      const correctedText = typeof data.text === 'object' ? JSON.stringify(data.text) : data.text;
+
       setCorrections({
-        text: data.text || '',
+        text: correctedText || '',
         feedback: data.feedback || '',
         evaluation: data.evaluation || {}
       });
@@ -45,7 +50,6 @@ Before sending your result, re-read your corrected text and improve further.`); 
       setLoading(false);
     }
   };
-
 
   return (
     <div className="container">
@@ -61,32 +65,4 @@ Before sending your result, re-read your corrected text and improve further.`); 
         <textarea
           className="custom-prompt-input"
           value={customPrompt}
-          onChange={(e) => setCustomPrompt(e.target.value)}
-          placeholder="Edit the GPT prompt here..."
-          rows={5}
-        />
-        <select
-          value={selectedModel}
-          onChange={(e) => setSelectedModel(e.target.value)}
-          className="model-select"
-        >
-          {models.map(model => (
-            <option key={model} value={model}>{model}</option>
-          ))}
-        </select>
-      </div>
-      <button onClick={handleSubmit} disabled={loading} className="submit-button">
-        {loading ? 'Correcting...' : 'Correct Essay'}
-      </button>
-      {error && <div className="error-message">{error}</div>}
-      {correctionText && (
-        <div className="section">
-          <h2>Corrected Text</h2>
-          <div className="correction-output" dangerouslySetInnerHTML={{ __html: correctionText }} />
-        </div>
-      )}
-    </div>
-  );
-};
-
-export default EssayCorrectionApp;
+          onChange={(
