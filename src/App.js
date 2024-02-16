@@ -31,10 +31,10 @@ Before sending your result, re-read your corrected text and improve further.`); 
       const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
         text: essayText,
         model: selectedModel,
-        customPrompt: customPrompt
+        customPrompt: customPrompt // Sending custom prompt to backend
       });
       const data = response.data;
-      // Here we are setting only the text to the state
+      // Directly set the received text (which should be a string) into the correctionText state
       setCorrectionText(data.text || '');
       setLoading(false);
     } catch (err) {
@@ -42,6 +42,7 @@ Before sending your result, re-read your corrected text and improve further.`); 
       setLoading(false);
     }
   };
+
 
   return (
     <div className="container">
