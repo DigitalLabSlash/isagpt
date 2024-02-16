@@ -8,7 +8,7 @@ const EssayCorrectionApp = () => {
 1. Para todos los errores lingüísticos (lengua, gramática, tiempos, conjugación, generos) marca la porción de texto incorrecta con '~~texto incorrecto~~'. Luego, escriba la o las correcciónes (para que el texto sea correcto quitandole los errores) en negrita como '**texto correcto**'. Por ejemplo, si el texto del estudiante dice 'los años recieentes', deberías corregirlo como 'los años ~~recieentes~~ **recientes**'.
 Before sending your result, re-read your corrected text and improve further.`); // Default prompt
   const [selectedModel, setSelectedModel] = useState('gpt-4-1106-preview'); // Default model
-  const [corrections, setCorrections] = useState({ text: '', feedback: '', evaluation: {} });
+  const [corrections, setCorrections] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -24,27 +24,26 @@ Before sending your result, re-read your corrected text and improve further.`); 
     'gpt-3.5-turbo-1106',
     'claude' // Representing Anthropic's Claude
   ];
-  
-const handleSubmit = async () => {
-  setLoading(true);
-  setError('');
-  try {
-    const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
-      text: essayText,
-      model: selectedModel,
-      customPrompt: customPrompt
-    });
-    const data = response.data;
-    setCorrections({
-      text: data.text || '', // Update only the corrected text
-    });
-    setLoading(false);
-  } catch (err) {
-    setError(`Error submitting essay for correction: ${err.message}`);
-    setLoading(false);
-  }
-};
 
+  const handleSubmit = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
+        text: essayText,
+        model: selectedModel,
+        customPrompt: customPrompt // Sending custom prompt to backend
+      });
+      const data = response.data;
+      
+      // Set the corrected text only
+      setCorrections(data.text || '');
+      setLoading(false);
+    } catch (err) {
+      setError(`Error submitting essay for correction: ${err.message}`);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="container">
@@ -78,16 +77,15 @@ const handleSubmit = async () => {
         </button>
       </div>
       {error && <div className="error-message">{error}</div>}
-      {corrections.text && (
+      {corrections && (
         <div className="section">
           <h2>Corrected Text</h2>
           <div
             className="correction-output"
-            dangerouslySetInnerHTML={{ __html: corrections.text }}
+            dangerouslySetInnerHTML={{ __html: corrections }}
           />
         </div>
       )}
-      {/* The rest of your component */}
     </div>
   );
 };
