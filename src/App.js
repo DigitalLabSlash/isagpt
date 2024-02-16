@@ -32,18 +32,11 @@ Before sending your result, re-read your corrected text and improve further.`); 
       const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
         text: essayText,
         model: selectedModel,
-        customPrompt: customPrompt // Sending custom prompt to backend
+        customPrompt: customPrompt
       });
       const data = response.data;
-      
-      // Check if 'data.text' is an object and stringify it if necessary
-      const correctedText = typeof data.text === 'object' ? JSON.stringify(data.text) : data.text;
-
-      setCorrections({
-        text: correctedText || '',
-        feedback: data.feedback || '',
-        evaluation: data.evaluation || {}
-      });
+      // Here we are setting only the text to the state
+      setCorrectionText(data.text || '');
       setLoading(false);
     } catch (err) {
       setError(`Error submitting essay for correction: ${err.message}`);
