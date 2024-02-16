@@ -35,15 +35,9 @@ Before sending your result, re-read your corrected text and improve further.`); 
         customPrompt: customPrompt // Sending custom prompt to backend
       });
       const data = response.data;
-
-      // Check if data.text is an object and attempt to stringify it
-      if (typeof data.text === 'object' && data.text !== null) {
-        setCorrections(JSON.stringify(data.text));
-      } else if (typeof data.text === 'string') {
-        setCorrections(data.text);
-      } else {
-        setError('Corrected text is not a string.');
-      }
+      
+      // Convert the corrected text object to a string
+      setCorrections(JSON.stringify(data.text) || '');
       setLoading(false);
     } catch (err) {
       setError(`Error submitting essay for correction: ${err.message}`);
@@ -86,9 +80,10 @@ Before sending your result, re-read your corrected text and improve further.`); 
       {corrections && (
         <div className="section">
           <h2>Corrected Text</h2>
-          <div className="correction-output">
-            {corrections}
-          </div>
+          <div
+            className="correction-output"
+            dangerouslySetInnerHTML={{ __html: corrections }}
+          />
         </div>
       )}
     </div>
