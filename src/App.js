@@ -35,9 +35,13 @@ Before sending your result, re-read your corrected text and improve further.`); 
         customPrompt: customPrompt // Sending custom prompt to backend
       });
       const data = response.data;
-      
-      // Set the corrected text directly as a string
-      setCorrections(data.text || '');
+
+      // Check if data.text is a string before setting it as the corrected text
+      if (typeof data.text === 'string') {
+        setCorrections(data.text);
+      } else {
+        setError('Corrected text is not a string.');
+      }
       setLoading(false);
     } catch (err) {
       setError(`Error submitting essay for correction: ${err.message}`);
@@ -80,10 +84,9 @@ Before sending your result, re-read your corrected text and improve further.`); 
       {corrections && (
         <div className="section">
           <h2>Corrected Text</h2>
-          <div
-            className="correction-output"
-            dangerouslySetInnerHTML={{ __html: corrections }}
-          />
+          <div className="correction-output">
+            {corrections}
+          </div>
         </div>
       )}
     </div>
