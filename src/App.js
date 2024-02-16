@@ -65,4 +65,36 @@ Before sending your result, re-read your corrected text and improve further.`); 
         <textarea
           className="custom-prompt-input"
           value={customPrompt}
-          onChange={(
+          onChange={(e) => setCustomPrompt(e.target.value)}
+          placeholder="Edit the GPT prompt here..."
+          rows={5}
+        />
+        <select
+          value={selectedModel}
+          onChange={(e) => setSelectedModel(e.target.value)}
+          className="model-select"
+        >
+          {models.map((model) => (
+            <option key={model} value={model}>{model}</option>
+          ))}
+        </select>
+        <button onClick={handleSubmit} disabled={loading} className="submit-button">
+          {loading ? 'Correcting...' : 'Correct Essay'}
+        </button>
+      </div>
+      {error && <div className="error-message">{error}</div>}
+      {corrections.text && (
+        <div className="section">
+          <h2>Corrected Text</h2>
+          <div
+            className="correction-output"
+            dangerouslySetInnerHTML={{ __html: corrections.text }}
+          />
+        </div>
+      )}
+      {/* The rest of your component */}
+    </div>
+  );
+};
+
+export default EssayCorrectionApp;
