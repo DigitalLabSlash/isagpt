@@ -36,8 +36,8 @@ Before sending your result, re-read your corrected text and improve further.`); 
       });
       const data = response.data;
       
-      // Set the corrected text only
-      setCorrections(data.text || '');
+      // Convert the corrected text object to a string
+      setCorrections(JSON.stringify(data.text) || '');
       setLoading(false);
     } catch (err) {
       setError(`Error submitting essay for correction: ${err.message}`);
