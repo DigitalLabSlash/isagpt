@@ -25,30 +25,28 @@ Before sending your result, re-read your corrected text and improve further.`); 
     'claude' // Representing Anthropic's Claude
   ];
 
-  const handleSubmit = async () => {
-    setLoading(true);
-    setError('');
-    try {
-      const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
-        text: essayText,
-        model: selectedModel,
-        customPrompt: customPrompt // Sending custom prompt to backend
-      });
-      const data = response.data;
-      // Check if data.text is an object and handle it appropriately
-      // If it's an object, it might have the actual text under a different property
-      const correctedText = typeof data.text === 'object' ? data.text.corrected : data.text;
-      setCorrections({
-        text: correctedText || '',
-        feedback: data.feedback || '',
-        evaluation: data.evaluation || {}
-      });
-      setLoading(false);
-    } catch (err) {
-      setError(`Error submitting essay for correction: ${err.message}`);
-      setLoading(false);
-    }
-  };
+const handleSubmit = async () => {
+  setLoading(true);
+  setError('');
+  try {
+    const response = await axios.post('https://isagpt.pythonanywhere.com/correct', {
+      text: essayText,
+      model: selectedModel,
+      customPrompt: customPrompt // Sending custom prompt to backend
+    });
+    const data = response.data;
+    // Make sure to assign a string to the text field
+    setCorrections({
+      text: data.text || '', // Ensure that text is a string
+      feedback: data.feedback || '',
+      evaluation: data.evaluation || {}
+    });
+    setLoading(false);
+  } catch (err) {
+    setError(`Error submitting essay for correction: ${err.message}`);
+    setLoading(false);
+  }
+};
 
 
   return (
